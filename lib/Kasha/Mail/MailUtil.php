@@ -8,6 +8,10 @@ use Temple\DateTimeUtil;
 use Temple\Util;
 
 use Kasha\Templar\TextProcessor;
+use Kasha\Core\Config;
+use Kasha\Core\Runtime;
+
+// @TODO Model, AdminAlert, User
 
 class MailUtil
 {
@@ -197,7 +201,7 @@ class MailUtil
 		$language = Util::lavnn('language', $options, 'en');
 		$sender = Util::lavnn('sender', $options, 0);
 
-		if (lavnn('format', $options, 'html') == 'html') {
+		if (Util::lavnn('format', $options, 'html') == 'html') {
 			$headers[] = 'Content-type: text/html; charset=utf-8';
 			$body = self::prepareHtmlMail($subj, $body, $hash, $intro, $signature, $language, $sender);
 		} else {
@@ -281,7 +285,8 @@ class MailUtil
 	 *
 	 * @return array
 	 */
-	private static function prepareMandrillMailRecipients(array $to) {
+	private static function prepareMandrillMailRecipients(array $to)
+	{
 		$output = array();
 		foreach ($to as $recipient) {
 			$output[] = array(
